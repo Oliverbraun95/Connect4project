@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
-public class DrawGrid {
+public class Connect4 {
     private JFrame frame;
 
-    public DrawGrid() {
+    public Connect4() {
         frame = new JFrame("DrawGrid");
         frame.setSize(700, 700);
         frame.setPreferredSize(frame.getSize());
@@ -19,7 +19,7 @@ public class DrawGrid {
     }
 
     public static void main(String... argv) {
-        new DrawGrid();
+        new Connect4();
     }
 
     public static class MultiDraw extends JPanel {
@@ -27,17 +27,18 @@ public class DrawGrid {
         int Y = 25;
         int cellSize = 50;
         int turn = 2;
-        int rows = 8;
-        int cols = 8;
+        int rows = 6;
+        int cols = 7;
         int colX = 40;
         boolean winner=false;
+        boolean possibleMove=true;
         String ccolor = "";
 
         Color[][] grid = new Color[rows][cols];
         public MultiDraw(Dimension dimension) {
             setLayout(null);
             for (int col = 0; col < grid[0].length; col++) {
-                JButton button = new JButton("Col " + col);
+                JButton button = new JButton(String.valueOf(col+1));
                 add(button);
                 button.setBorderPainted(false);
                 button.setBackground(new Color(255,255,255));// inside the brackets your rgb color value like 255,255,255
@@ -46,7 +47,6 @@ public class DrawGrid {
                 button.addActionListener(e -> {
                     if(!winner){
                         int Xpos = button.getX()-40;
-                        System.out.print(Xpos);
                         int clickedRow;
                         int clickedCol = Xpos/(cellSize+10);
                         clickedRow = dropP(clickedCol);
@@ -64,6 +64,9 @@ public class DrawGrid {
                             if (checkForWinner(clickedCol, clickedRow, grid[clickedRow][clickedCol])) {
                                 winner = true;
 
+                            }
+                            if (checkForDraw(clickedCol, clickedRow, grid[clickedRow][clickedCol])) {
+                                possibleMove = false;
                             }
                         }
                         repaint();
@@ -124,10 +127,15 @@ public class DrawGrid {
 
             g2.setColor(new Color(255, 255, 255));
             if(!winner){
-                if(turn%2==0)
-                    g2.drawString("Red's Turn",X + 500,20);
-                else
-                    g2.drawString("Yellow's Turn",X + 500,40);
+                if(!possibleMove){
+                    g2.drawString("DRAW",X + 500,20);
+                }
+                else{
+                    if(turn%2==0)
+                        g2.drawString("Red's Turn",X + 500,20);
+                    else
+                        g2.drawString("Yellow's Turn",X + 500,40);
+                }
             }else{
                 g2.drawString("WINNER - "+ ccolor,X + 500,20);
             }
@@ -149,7 +157,19 @@ public class DrawGrid {
 
         }
 
-        public boolean  checkForWinner(int cc,int cr, Color c){
+        private boolean checkForDraw(int clickedCol, int clickedRow, Color color) {
+            for (Color[] colors : grid) {
+                for (int col = 0; col < grid[0].length; col++) {
+                    if (colors[col].equals(Color.WHITE)) {
+                        return false;
+
+                    }
+                }
+            }
+            return true;
+        }
+
+        public boolean  checkForWinner(int cc,int cr, Color c) {
             //search west and east
             int xStart = cc;
             int count = 1;
@@ -311,6 +331,7 @@ public class DrawGrid {
 
         public void reset(){
             winner=false;
+            possibleMove=true;
             turn=2;
             for (int row = 0; row < grid.length; row++) {
                 for (int col = 0; col < grid[0].length; col++) {
@@ -321,5 +342,5 @@ public class DrawGrid {
             repaint();
         }
 
-    }//end of class
+    }
 }
