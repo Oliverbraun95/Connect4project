@@ -177,7 +177,7 @@ public class Connect4 {
 
         }
 
-        // Was bedeutet dropP?
+        // dropPoint wo ist letztes weißes Feld um umzufärben
         public int dropP(int cc){
             int cr = grid.length-1;
 
