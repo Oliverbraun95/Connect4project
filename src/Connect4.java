@@ -119,7 +119,7 @@ public class Connect4 {
             helpButton.setFocusPainted(false);
             helpButton.setBounds(grid[0].length*(cellSize+10) + 100,100,100,cellSize);
             helpButton.addActionListener(e -> {
-                JOptionPane.showMessageDialog(this, "Textplatzhalter für Spielregeln");
+              JOptionPane.showMessageDialog(this, "Drop your discs into the grid. The discs occupy the lowest available space in the column. Be the first to form a horizontal, vertical, or diagonal line of four of your discs.");
             });
 
 
