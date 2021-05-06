@@ -163,11 +163,11 @@ public class Connect4 {
                 else{
                     if(turn%2==0) {
                         g2.setColor(new Color(255, 0, 0));
-                        g2.drawString("Red's Turn", X + 500, 40);
+                        g2.drawString("Red's Turn", grid[0].length*(cellSize+10) + 100, 50);
                     }
                     else {
                         g2.setColor(new Color(245, 220, 8));
-                        g2.drawString("Yellow's Turn", X + 500, 40);
+                        g2.drawString("Yellow's Turn", grid[0].length*(cellSize+10) + 100, 50);
                     }
                 }
             // Gewinner
