@@ -1,15 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
 
 public class Connect4 {
-    private JFrame frame;
 
     public Connect4() {
-        frame = new JFrame("DrawGrid");
+        JFrame frame = new JFrame("DrawGrid");
         frame.setSize(700, 700);
         frame.setPreferredSize(frame.getSize());
         frame.add(new MultiDraw(frame.getSize()));
@@ -97,6 +92,17 @@ public class Connect4 {
                 }
 
             }
+
+            JButton exitButton = new JButton("Exit");
+            add(exitButton);
+            exitButton.setBorderPainted(false);
+            exitButton.setBackground(new Color(255,255,255));
+            exitButton.setFocusPainted(false);
+            exitButton.setBounds(550,200,100,cellSize);
+            exitButton.addActionListener(e -> {
+                System.exit(0);
+            });
+
         }
 
         @Override
