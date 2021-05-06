@@ -163,16 +163,19 @@ public class Connect4 {
                 else{
                     if(turn%2==0) {
                         g2.setColor(new Color(255, 0, 0));
+                        g2.setFont(new Font ("Calibri", Font.BOLD, 30));
                         g2.drawString("Red's Turn", grid[0].length*(cellSize+10) + 100, 50);
                     }
                     else {
                         g2.setColor(new Color(245, 220, 8));
+                        g2.setFont(new Font ("Calibri", Font.BOLD, 30));
                         g2.drawString("Yellow's Turn", grid[0].length*(cellSize+10) + 100, 50);
                     }
                 }
             // Gewinner
             }else{
-                g2.drawString("WINNER - "+ ccolor,X + 500,20);
+                g2.setFont(new Font ("Calibri", Font.BOLD, 30));
+                g2.drawString("WINNER - "+ ccolor,grid[0].length*(cellSize+10) + 60,50);
             }
 
         }
