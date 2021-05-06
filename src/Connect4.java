@@ -75,13 +75,12 @@ public class Connect4 {
             }
             setSize(dimension);
             setPreferredSize(dimension);
-        // Neustartbutton
+     // Neustartbutton
             JButton restartButton = new JButton("Restart");
             add(restartButton);
             restartButton.setBorderPainted(false);
             restartButton.setBackground(new Color(255,255,255));
             restartButton.setFocusPainted(false);
-        // Ändere Location statt x 550 nehmen
             restartButton.setBounds(grid[0].length*(cellSize+10) + 100,200,100,cellSize);
             restartButton.addActionListener(e -> reset());
             int x = 0;
@@ -98,9 +97,7 @@ public class Connect4 {
                 }
 
             }
-            // Exitbutton
-            // Ändere Location statt x 550 nehme Anzahl ColX + Abstand Anzahl + Abstand
-            //x: int cols* int cellSize + 100 - get Methode da nicht public? colX += cellSize+10
+      // Exitbutton
             JButton exitButton = new JButton("Exit");
             add(exitButton);
             exitButton.setBorderPainted(false);
@@ -111,7 +108,7 @@ public class Connect4 {
                 System.exit(0);
             });
 
-            // Hilfeanzeigen
+     // Hilfeanzeigen
             JButton helpButton = new JButton("Help");
             add(helpButton);
             helpButton.setBorderPainted(false);
@@ -152,7 +149,7 @@ public class Connect4 {
                 X = 40;
             }
 
-    // Hier sollte Text in ein Label gepackt werden od zumindest Position auch relativ gemacht werden
+    // Wer ist dran, wer hat gewonnen Textausgabe
             g2.setColor(new Color(255, 255, 255));
             if(!winner){
                 // Unentschieden
