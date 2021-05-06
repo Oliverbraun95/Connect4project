@@ -365,7 +365,7 @@ public class Connect4 {
 
             return false;
         }
-// Reset?
+// Reset nach Restart Button färbt alle Buttons weiß und updatet durch repaint
         public void reset(){
             winner=false;
             possibleMove=true;
