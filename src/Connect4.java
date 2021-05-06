@@ -29,6 +29,7 @@ public class Connect4 {
         boolean possibleMove=true;
         String ccolor = "";
 
+        // Spielfeldeinstellung
         Color[][] grid = new Color[rows][cols];
         public MultiDraw(Dimension dimension) {
             setLayout(null);
@@ -40,6 +41,7 @@ public class Connect4 {
                 button.setFocusPainted(false);
                 button.setBounds(colX,Y,cellSize+5,cellSize+5);
                 button.addActionListener(e -> {
+                    // wenn kein Gewinner, weiterspielen
                     if(!winner){
                         int Xpos = button.getX()-40;
                         int clickedRow;
@@ -56,6 +58,7 @@ public class Connect4 {
                                 ccolor = "Yellow";
                             }
                             turn++;
+                            // wenn Gewinner, keine weiteren Spielschritte erlauben
                             if (checkForWinner(clickedCol, clickedRow, grid[clickedRow][clickedCol])) {
                                 winner = true;
 
@@ -67,15 +70,18 @@ public class Connect4 {
                         repaint();
                     }
                 });
+            // Abstand zwischen Spalten
                 colX += cellSize+10;
             }
             setSize(dimension);
             setPreferredSize(dimension);
+        // Neustartbutton
             JButton restartButton = new JButton("Restart");
             add(restartButton);
             restartButton.setBorderPainted(false);
             restartButton.setBackground(new Color(255,255,255));
             restartButton.setFocusPainted(false);
+        // Ändere Location statt x 550 nehmen
             restartButton.setBounds(550,100,100,cellSize);
             restartButton.addActionListener(e -> reset());
             int x = 0;
@@ -92,12 +98,14 @@ public class Connect4 {
                 }
 
             }
-
+            // Exitbutton
             JButton exitButton = new JButton("Exit");
             add(exitButton);
             exitButton.setBorderPainted(false);
             exitButton.setBackground(new Color(255,255,255));
             exitButton.setFocusPainted(false);
+        // Ändere Location statt x 550 nehme Anzahl ColX + Abstand Anzahl + Abstand
+        //x: int cols* int cellSize + 100
             exitButton.setBounds(550,200,100,cellSize);
             exitButton.addActionListener(e -> {
                 System.exit(0);
@@ -106,6 +114,7 @@ public class Connect4 {
         }
 
         @Override
+        // Größe und Farbe Grafik g1 Hintergrund, g2 Blaues Spielbrett
         public void paintComponent(Graphics g) {
             X = 40;
             Y = 100;
@@ -117,7 +126,7 @@ public class Connect4 {
             g2.setColor(new Color(0, 0, 255));
             g2.fillRect(X - 15,Y - 15,grid[0].length*(cellSize+10) + 20,grid.length*(cellSize+10) + 20);
 
-            //2) draw grid here
+            //2) draw grid here, Runde Zellen Voreinstellung
             for (Color[] colors : grid) {
                 for (int col = 0; col < grid[0].length; col++) {
 
@@ -133,21 +142,25 @@ public class Connect4 {
 
             g2.setColor(new Color(255, 255, 255));
             if(!winner){
+                // Unentschieden
                 if(!possibleMove){
                     g2.drawString("DRAW",X + 500, 20);
                 }
+                // weiterer Zug
                 else{
                     if(turn%2==0)
                         g2.drawString("Red's Turn",X + 500,40);
                     else
                         g2.drawString("Yellow's Turn",X + 500,40);
                 }
+            // Gewinner
             }else{
                 g2.drawString("WINNER - "+ ccolor,X + 500,20);
             }
 
         }
 
+        // Was bedeutet dropP?
         public int dropP(int cc){
             int cr = grid.length-1;
 
@@ -162,7 +175,7 @@ public class Connect4 {
             return -1;
 
         }
-
+// Prüfe auf Unentschieden
         private boolean checkForDraw(int clickedCol, int clickedRow, Color color) {
             for (Color[] colors : grid) {
                 for (int col = 0; col < grid[0].length; col++) {
@@ -175,6 +188,7 @@ public class Connect4 {
             return true;
         }
 
+// Prüfe auf Gewinner
         public boolean  checkForWinner(int cc,int cr, Color c) {
             //search west and east
             int xStart = cc;
@@ -334,7 +348,7 @@ public class Connect4 {
 
             return false;
         }
-
+// Reset?
         public void reset(){
             winner=false;
             possibleMove=true;
