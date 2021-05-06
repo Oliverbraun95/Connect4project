@@ -41,7 +41,7 @@ public class Connect4 {
                 JButton button = new JButton(String.valueOf(col+1));
                 add(button);
                 button.setBorderPainted(false);
-                button.setBackground(new Color(255, 255, 255));
+                button.setBackground(new Color(255,255,255));// inside the brackets your rgb color value like 255,255,255
                 button.setFocusPainted(false);
                 button.setBounds(colX,Y,cellSize+5,cellSize+5);
                 button.addActionListener(e -> {
@@ -128,11 +128,11 @@ public class Connect4 {
             g2.setColor(new Color(255, 255, 255));
             if(!winner){
                 if(!possibleMove){
-                    g2.drawString("DRAW",X + 500, 20);
+                    g2.drawString("DRAW",X + 500,20);
                 }
                 else{
                     if(turn%2==0)
-                        g2.drawString("Red's Turn",X + 500,40);
+                        g2.drawString("Red's Turn",X + 500,20);
                     else
                         g2.drawString("Yellow's Turn",X + 500,40);
                 }
