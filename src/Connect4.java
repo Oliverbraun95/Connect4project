@@ -99,13 +99,13 @@ public class Connect4 {
 
             }
             // Exitbutton
+            // Ändere Location statt x 550 nehme Anzahl ColX + Abstand Anzahl + Abstand
+            //x: int cols* int cellSize + 100 - get Methode da nicht public? colX += cellSize+10
             JButton exitButton = new JButton("Exit");
             add(exitButton);
             exitButton.setBorderPainted(false);
             exitButton.setBackground(new Color(255,255,255));
             exitButton.setFocusPainted(false);
-        // Ändere Location statt x 550 nehme Anzahl ColX + Abstand Anzahl + Abstand
-        //x: int cols* int cellSize + 100
             exitButton.setBounds(550,200,100,cellSize);
             exitButton.addActionListener(e -> {
                 System.exit(0);
@@ -140,6 +140,7 @@ public class Connect4 {
                 X = 40;
             }
 
+    // Hier sollte Text in ein Label gepackt werden od zumindest Position auch relativ gemacht werden
             g2.setColor(new Color(255, 255, 255));
             if(!winner){
                 // Unentschieden
@@ -148,10 +149,14 @@ public class Connect4 {
                 }
                 // weiterer Zug
                 else{
-                    if(turn%2==0)
-                        g2.drawString("Red's Turn",X + 500,40);
-                    else
-                        g2.drawString("Yellow's Turn",X + 500,40);
+                    if(turn%2==0) {
+                        g2.setColor(new Color(255, 0, 0));
+                        g2.drawString("Red's Turn", X + 500, 40);
+                    }
+                    else {
+                        g2.setColor(new Color(245, 220, 8));
+                        g2.drawString("Yellow's Turn", X + 500, 40);
+                    }
                 }
             // Gewinner
             }else{
