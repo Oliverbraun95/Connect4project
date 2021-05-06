@@ -111,6 +111,18 @@ public class Connect4 {
                 System.exit(0);
             });
 
+            // Hilfeanzeigen
+            JButton helpButton = new JButton("Help");
+            add(helpButton);
+            helpButton.setBorderPainted(false);
+            helpButton.setBackground(new Color(255,255,255));
+            helpButton.setFocusPainted(false);
+            helpButton.setBounds(550,300,100,cellSize);
+            helpButton.addActionListener(e -> {
+                JOptionPane.showMessageDialog(this, "Textplatzhalter für Spielregeln");
+            });
+
+
         }
 
         @Override
