@@ -82,7 +82,7 @@ public class Connect4 {
             restartButton.setBackground(new Color(255,255,255));
             restartButton.setFocusPainted(false);
         // Ändere Location statt x 550 nehmen
-            restartButton.setBounds(550,100,100,cellSize);
+            restartButton.setBounds(grid[0].length*(cellSize+10) + 100,200,100,cellSize);
             restartButton.addActionListener(e -> reset());
             int x = 0;
             for (int row = 0; row < grid.length; row++) {
@@ -106,7 +106,7 @@ public class Connect4 {
             exitButton.setBorderPainted(false);
             exitButton.setBackground(new Color(255,255,255));
             exitButton.setFocusPainted(false);
-            exitButton.setBounds(550,200,100,cellSize);
+            exitButton.setBounds(grid[0].length*(cellSize+10) + 100,300,100,cellSize);
             exitButton.addActionListener(e -> {
                 System.exit(0);
             });
@@ -117,7 +117,7 @@ public class Connect4 {
             helpButton.setBorderPainted(false);
             helpButton.setBackground(new Color(255,255,255));
             helpButton.setFocusPainted(false);
-            helpButton.setBounds(550,300,100,cellSize);
+            helpButton.setBounds(grid[0].length*(cellSize+10) + 100,100,100,cellSize);
             helpButton.addActionListener(e -> {
                 JOptionPane.showMessageDialog(this, "Textplatzhalter für Spielregeln");
             });
