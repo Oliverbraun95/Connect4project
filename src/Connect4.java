@@ -5,18 +5,16 @@ public class Connect4 {
 
     public Connect4() {
         JFrame frame = new JFrame("DrawGrid");
-        frame.setSize(700, 700);
+        frame.setSize(700, 550);
         frame.setPreferredSize(frame.getSize());
         frame.add(new MultiDraw(frame.getSize()));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
-
     public static void main(String... argv) {
         new Connect4();
     }
-
     public static class MultiDraw extends JPanel {
         int X = 25;
         int Y = 25;
@@ -30,7 +28,6 @@ public class Connect4 {
         boolean winner=false;
         boolean possibleMove=true;
         String ccolor = "";
-
         // Spielfeldeinstellung
         Color[][] grid = new Color[rows][cols];
         public MultiDraw(Dimension dimension) {
@@ -49,9 +46,7 @@ public class Connect4 {
                         int clickedRow;
                         int clickedCol = Xpos/(cellSize+10);
                         clickedRow = dropP(clickedCol);
-
                         if(clickedRow!=-1) {
-
                             if (turn % 2 == 0) {
                                 grid[clickedRow][clickedCol] = Color.red;
                                 ccolor = "RED";
@@ -63,26 +58,26 @@ public class Connect4 {
                             // wenn Gewinner, keine weiteren Spielschritte erlauben
                             if (checkForWinner(clickedCol, clickedRow, grid[clickedRow][clickedCol])) {
                                 winner = true;
-                                if (ccolor == "RED") {
+                                if (ccolor.equals("RED")) {
                                     redWon++;
                                 }
                                 else {
                                     yellowWon++;
                                 }
                             }
-                            if (checkForDraw(clickedCol, clickedRow, grid[clickedRow][clickedCol])) {
+                            if (checkForDraw()) {
                                 possibleMove = false;
                             }
                         }
                         repaint();
                     }
                 });
-            // Abstand zwischen Spalten
+                // Abstand zwischen Spalten
                 colX += cellSize+10;
             }
             setSize(dimension);
             setPreferredSize(dimension);
-     // Neustartbutton
+            // Neustartbutton
             JButton restartButton = new JButton("Restart");
             add(restartButton);
             restartButton.setBorderPainted(false);
@@ -93,7 +88,6 @@ public class Connect4 {
             int x = 0;
             for (int row = 0; row < grid.length; row++) {
                 for (int col = 0; col < grid[0].length; col++) {
-                    Color c;
                     if(x%2==0){
                         grid[row][col] = Color.white;
                     }else{
@@ -102,35 +96,27 @@ public class Connect4 {
                     x++;
 
                 }
-
             }
-      // Exitbutton
+            // Exitbutton
             JButton exitButton = new JButton("Exit");
             add(exitButton);
             exitButton.setBorderPainted(false);
             exitButton.setBackground(new Color(255,255,255));
             exitButton.setFocusPainted(false);
             exitButton.setBounds(grid[0].length*(cellSize+10) + 100,300,100,cellSize);
-            exitButton.addActionListener(e -> {
-                System.exit(0);
-            });
-
-     // Hilfeanzeigen
+            exitButton.addActionListener(e -> System.exit(0));
+            // Hilfeanzeigen
             JButton helpButton = new JButton("Help");
             add(helpButton);
             helpButton.setBorderPainted(false);
             helpButton.setBackground(new Color(255,255,255));
             helpButton.setFocusPainted(false);
             helpButton.setBounds(grid[0].length*(cellSize+10) + 100,100,100,cellSize);
-            helpButton.addActionListener(e -> {
-              JOptionPane.showMessageDialog(this, "Drop your discs into the grid. The discs occupy the lowest available space in the column. Be the first to form a horizontal, vertical, or diagonal line of four of your discs.");
-            });
-
-
+            helpButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Drop your discs into the grid. The discs occupy the lowest available space in the column. Be the first to form a horizontal, vertical, or diagonal line of four of your discs."));
         }
 
         @Override
-        // Größe und Farbe Grafik g1 Hintergrund, g2 Blaues Spielbrett
+        // Größe und Farbe Grafik g1 Hintergrund, g2 Blaues Spielbrett, g3 Rote Scoresite, g4 Gelbe Scoresite
         public void paintComponent(Graphics g) {
             X = 40;
             Y = 100;
@@ -143,7 +129,6 @@ public class Connect4 {
             g2.fillRect(X - 15,Y - 15,grid[0].length*(cellSize+10) + 20,grid.length*(cellSize+10) + 20);
             Graphics2D g3 = (Graphics2D)g;
             Graphics2D g4 = (Graphics2D)g;
-
             //2) draw grid here, Runde Zellen Voreinstellung
             for (Color[] colors : grid) {
                 for (int col = 0; col < grid[0].length; col++) {
@@ -158,41 +143,45 @@ public class Connect4 {
                 X = 40;
             }
 
-    // Wer ist dran, wer hat gewonnen Textausgabe
+            // Wer ist dran, wer hat gewonnen Textausgabe
             g2.setColor(new Color(255, 255, 255));
             if(!winner){
                 // Unentschieden
                 if(!possibleMove){
-                    g2.drawString("DRAW",X + 500, 20);
+                    g2.setFont(new Font ("Calibri", Font.BOLD, 25));
+                    g2.drawString("DRAW",grid[0].length*(cellSize+10) + 100, 50);
                 }
                 // weiterer Zug
                 else{
                     if(turn%2==0) {
                         g2.setColor(new Color(255, 0, 0));
-                        g2.setFont(new Font ("Calibri", Font.BOLD, 30));
+                        g2.setFont(new Font ("Calibri", Font.BOLD, 25));
                         g2.drawString("Red's Turn", grid[0].length*(cellSize+10) + 100, 50);
                     }
                     else {
                         g2.setColor(new Color(245, 220, 8));
-                        g2.setFont(new Font ("Calibri", Font.BOLD, 30));
+                        g2.setFont(new Font ("Calibri", Font.BOLD, 25));
                         g2.drawString("Yellow's Turn", grid[0].length*(cellSize+10) + 100, 50);
                     }
                 }
             // Gewinner
             }else{
-                if (ccolor == "RED") {
+                if (ccolor.equals("RED")) {
                     g2.setColor(new Color(255, 0, 0));
                 }
                 else {
                     g2.setColor(new Color(245, 220, 8));
                 }
-                g2.setFont(new Font ("Calibri", Font.BOLD, 30));
-                g2.drawString("WINNER - "+ ccolor,grid[0].length*(cellSize+10) + 60,50);
+                g2.setFont(new Font ("Calibri", Font.BOLD, 25));
+                g2.drawString("WINNER - "+ ccolor,grid[0].length*(cellSize+10) + 80,50);
             }
+            // Draw Scoreboard
+            // Draw Red Scoresite
             g3.setColor(new Color(255, 0, 0));
             g3.setFont(new Font ("Calibri", Font.BOLD, 15));
             g3.drawString("Red won ",grid[0].length*(cellSize+10) + 75,425);
             g3.drawString(redWon + " times",grid[0].length*(cellSize+10) + 80,450);
+            // Draw Yellow Scoresite
             g4.setColor(new Color(245, 220, 8));
             g4.setFont(new Font ("Calibri", Font.BOLD, 15));
             g4.drawString("Yellow won ",grid[0].length*(cellSize+10) + 145,425);
@@ -202,20 +191,16 @@ public class Connect4 {
         // dropPoint wo ist letztes weißes Feld um umzufärben
         public int dropP(int cc){
             int cr = grid.length-1;
-
             while(cr>=0){
-
                 if(grid[cr][cc].equals(Color.white)){
                     return cr;
                 }
                 cr--;
             }
-
             return -1;
-
         }
-// Prüfe auf Unentschieden
-        private boolean checkForDraw(int clickedCol, int clickedRow, Color color) {
+        // Prüfe auf Unentschieden
+        private boolean checkForDraw() {
             for (Color[] colors : grid) {
                 for (int col = 0; col < grid[0].length; col++) {
                     if (colors[col].equals(Color.WHITE)) {
@@ -227,12 +212,12 @@ public class Connect4 {
             return true;
         }
 
-// Prüfe auf Gewinner
+        // Prüfe auf Gewinner
         public boolean  checkForWinner(int cc,int cr, Color c) {
-            //search west and east
+            // search west and east
             int xStart = cc;
             int count = 1;
-            //check west
+            // check west
             xStart--;
             while(xStart>=0){
                 if(grid[cr][xStart].equals(c)){
@@ -246,7 +231,7 @@ public class Connect4 {
                 xStart--;
             }
 
-            //check east
+            // check east
             xStart = cc;
             xStart++;
             while(xStart<grid[0].length){
@@ -262,12 +247,7 @@ public class Connect4 {
 
                 xStart++;
             }
-
-            /*
-             * More searches here
-             */
-
-            //check North
+            // check North
             count = 1;
             int yStart = cr;
             yStart--;
@@ -282,8 +262,7 @@ public class Connect4 {
 
                 yStart--;
             }
-
-            //check east
+            // check east
             yStart = cr;
             yStart++;
             while(yStart<grid.length){
@@ -299,10 +278,6 @@ public class Connect4 {
 
                 yStart++;
             }
-            /*
-             * More Searches
-             */
-
             //check NorthWest
             count = 1;
             yStart = cr;
@@ -321,8 +296,7 @@ public class Connect4 {
                 yStart--;
                 xStart--;
             }
-
-            //check Southeast
+            // check Southeast
             yStart = cr;
             yStart++;
             xStart = cc;
@@ -341,12 +315,7 @@ public class Connect4 {
                 yStart++;
                 xStart++;
             }
-
-            /*
-             * More Searches
-             */
-
-            //check southWest
+            // check southWest
             count = 1;
             yStart = cr;
             xStart = cc;
@@ -364,8 +333,7 @@ public class Connect4 {
                 yStart++;
                 xStart--;
             }
-
-            //check Northeast
+            // check Northeast
             yStart = cr;
             yStart--;
             xStart = cc;
@@ -387,7 +355,7 @@ public class Connect4 {
 
             return false;
         }
-// Reset nach Restart Button färbt alle Buttons weiß und updatet durch repaint
+        // Reset nach Restart Button färbt alle Buttons weiß und updatet durch repaint
         public void reset(){
             winner=false;
             possibleMove=true;
