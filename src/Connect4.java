@@ -25,6 +25,8 @@ public class Connect4 {
         int rows = 6;
         int cols = 7;
         int colX = 40;
+        int redWon = 0;
+        int yellowWon = 0;
         boolean winner=false;
         boolean possibleMove=true;
         String ccolor = "";
@@ -61,7 +63,12 @@ public class Connect4 {
                             // wenn Gewinner, keine weiteren Spielschritte erlauben
                             if (checkForWinner(clickedCol, clickedRow, grid[clickedRow][clickedCol])) {
                                 winner = true;
-
+                                if (ccolor == "RED") {
+                                    redWon++;
+                                }
+                                else {
+                                    yellowWon++;
+                                }
                             }
                             if (checkForDraw(clickedCol, clickedRow, grid[clickedRow][clickedCol])) {
                                 possibleMove = false;
@@ -134,6 +141,8 @@ public class Connect4 {
             Graphics2D g2 = (Graphics2D)g;
             g2.setColor(new Color(0, 0, 255));
             g2.fillRect(X - 15,Y - 15,grid[0].length*(cellSize+10) + 20,grid.length*(cellSize+10) + 20);
+            Graphics2D g3 = (Graphics2D)g;
+            Graphics2D g4 = (Graphics2D)g;
 
             //2) draw grid here, Runde Zellen Voreinstellung
             for (Color[] colors : grid) {
@@ -171,10 +180,23 @@ public class Connect4 {
                 }
             // Gewinner
             }else{
+                if (ccolor == "RED") {
+                    g2.setColor(new Color(255, 0, 0));
+                }
+                else {
+                    g2.setColor(new Color(245, 220, 8));
+                }
                 g2.setFont(new Font ("Calibri", Font.BOLD, 30));
                 g2.drawString("WINNER - "+ ccolor,grid[0].length*(cellSize+10) + 60,50);
             }
-
+            g3.setColor(new Color(255, 0, 0));
+            g3.setFont(new Font ("Calibri", Font.BOLD, 15));
+            g3.drawString("Red won ",grid[0].length*(cellSize+10) + 75,425);
+            g3.drawString(redWon + " times",grid[0].length*(cellSize+10) + 80,450);
+            g4.setColor(new Color(245, 220, 8));
+            g4.setFont(new Font ("Calibri", Font.BOLD, 15));
+            g4.drawString("Yellow won ",grid[0].length*(cellSize+10) + 145,425);
+            g4.drawString(yellowWon + " times",grid[0].length*(cellSize+10) + 157,450);
         }
 
         // dropPoint wo ist letztes weißes Feld um umzufärben
